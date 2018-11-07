@@ -2,27 +2,27 @@ package v1;
 
 public class Movie {
 	
-	public static final int CHILDRENS = 2; 
-	public static final int REGULAR = 0; 
-	public static final int NEW_RELEASE = 1;
-	
 	private String title; 
-	private int priceCode;
+	private Price price;
 	
 	public Movie(String title, int priceCode) { 
 		this.title = title;
-		this.priceCode = priceCode;
+		setPriceCode(priceCode);
 	}
 	
 	public int getPriceCode() { 
-		return priceCode;
+		return price.getPriceCode();
 	}
 	
 	public void setPriceCode(int priceCode) {
-		this.priceCode = priceCode;
+		switch(priceCode) {
+			case Price.CHILDRENS: this.price = new ChildrenPrice(); break;
+			case Price.NEW_RELEASE: this.price = new NewReleasePrice(); break;
+			case Price.REGULAR: this.price = new RegularPrice(); break;
+		}
 	}
 
-	public String getTitle (){ 
+	public String getTitle(){ 
 		return title;
 	}
 	
