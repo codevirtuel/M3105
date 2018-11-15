@@ -21,41 +21,19 @@ public class Customer {
 		return name;
 	}
 
+	public List<Rental> getRentals() {
+		return rentals;
+	}
+
 	public String statement() {
-		Iterator<Rental> theRentals = rentals.iterator();
-
-		String result = "Rental Record for " + getName() + "\n";
-
-		while (theRentals.hasNext()) {
-			Rental each = theRentals.next();
-
-			// show figures for this rental
-			result += "\t" + each.getMovie().getTitle() + "\t" + String.valueOf(each.getCharge()) + "\n";
-		}
-
-		// add footer lines
-		result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
-		result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) + " frequent renter points";
-
-		return result;
+		return new StatementConsole().value(this);
 	}
 
 	public String htmlStatement() {
-		Iterator<Rental> theRentals = rentals.iterator();
-		String result = "<H1>Rentals for <EM>" + getName() + "</EM></H1><P>\n";
-		while (theRentals.hasNext()) {
-			Rental each = (Rental) theRentals.next();
-			// show figures for each rental
-			result += each.getMovie().getTitle() + ": " + String.valueOf(each.getCharge()) + "<BR>\n";
-		}
-		// add footer lines
-		result += "<P>You owe <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";
-		result += "On this rental you earned <EM>" + String.valueOf(getTotalFrequentRenterPoints())
-				+ "</EM> frequent renter points<P>";
-		return result;
+		return new StatementHtml().value(this);
 	}
 
-	private int getTotalFrequentRenterPoints() {
+	public int getTotalFrequentRenterPoints() {
 		int result = 0;
 		Iterator<Rental> theRentals = rentals.iterator();
 		while (theRentals.hasNext()) {
@@ -65,7 +43,7 @@ public class Customer {
 		return result;
 	}
 
-	private double getTotalCharge() {
+	public double getTotalCharge() {
 		double result = 0;
 		Iterator<Rental> theRentals = rentals.iterator();
 		while (theRentals.hasNext()) {
